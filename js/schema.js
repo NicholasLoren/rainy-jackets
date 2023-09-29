@@ -93,6 +93,12 @@ function removeFromCart(product) {
   localStorage.setItem('cartProducts', JSON.stringify(newProducts))
 }
 
+//function to clear the cart on checkout
+function clearCart(){
+  localStorage.removeItem('cartProducts')
+  updateCartBadge()
+}
+
 //function for getting cart items in storage
 function countItemsInCart() {
   //get all products from the storage : Array
@@ -134,16 +140,7 @@ function updateCartBadge() {
   }
 }
 
-//function to update total
-// function updateCheckoutTotal(amount) {
-//   //get the total element
-//   const totalElement = document.getElementById('total')
-//   //if the total element is not found exit
-  
-//   if (!totalElement) return
-//   //update the total
-//   totalElement.value = amount
-// }
+ 
 
 //get total cost for all products in cart
 function getTotalProductAmount() {
@@ -536,7 +533,9 @@ function createCheckoutElement(product, defaultCount = 1) {
     if (checkOutItems.length > 0) return
 
     //display the no products found in cart
+    updateCheckoutTotal()
     area.appendChild(showNoCheckOutProducts())
+
   }
   // Create the main row container
   const mainRow = createElem('div', ['row'])
