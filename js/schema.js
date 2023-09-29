@@ -72,7 +72,7 @@ function updateCartProductTotal(product, increase = true) {
 //Function for removing item from a cart
 function removeFromCart(product) {
   //get all products from the storage : Array
-  const cartProducts = JSON.parse(localStorage.getItem('cartProducts'))
+  const cartProducts = getCheckOutItems() 
   if (!cartProducts) {
     //if cartProducts key doesn't exist in storage,  quit
     return
@@ -82,13 +82,16 @@ function removeFromCart(product) {
   const productFound = cartProducts.find(
     (cartProduct) => (cartProduct.id = product.id)
   )
+
+  
   //if product is not already in cart quit.
   if (!productFound) return
 
   //remove product to cart
   const newProducts = cartProducts.filter(
-    (cartProduct) => cartProduct.id !== product.id
+    (cartProduct) => cartProduct.id !== productFound.id
   )
+ 
   //update storage
   localStorage.setItem('cartProducts', JSON.stringify(newProducts))
 }
@@ -533,7 +536,7 @@ function createCheckoutElement(product, defaultCount = 1) {
     if (checkOutItems.length > 0) return
 
     //display the no products found in cart
-    updateCheckoutTotal()
+    
     area.appendChild(showNoCheckOutProducts())
 
   }
